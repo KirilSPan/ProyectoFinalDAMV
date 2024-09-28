@@ -10,7 +10,7 @@ table 50100 GCPCocheKPR
             DataClassification = SystemMetadata;
             Editable = false;
         }
-        field(2; "Marca"; Text[50])
+        field(2; "Marca"; Enum GCPCocheMarcaKPR)
         {
             DataClassification = ToBeClassified;
         }
