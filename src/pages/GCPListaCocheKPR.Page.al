@@ -1,4 +1,8 @@
 namespace ALProject.ALProject;
+using System.Environment;
+using System.Utilities;
+using GCP.GCP;
+using System.IO;
 
 page 50100 "GCPListaCocheKPR"
 {
@@ -52,36 +56,82 @@ page 50100 "GCPListaCocheKPR"
                 {
                     ApplicationArea = All;
                     ShowCaption = false; // Mostrar la etiqueta "Foto"
-
-
                 }
             }
+        }
 
-
-
-
+        area(FactBoxes)
+        {
+            part(MediaFactbox; GCPImagenFactboxKPR)
+            {
+                ApplicationArea = all;
+                SubPageLink = Id = field(Id);
+            }
         }
     }
     actions
     {
         area(processing)
         {
-            //     action("Eliminar Imagen")
-            //     {
-            //         ApplicationArea = All;
-            //         Caption = 'Eliminar Imagen';
-            //         Image = Delete;
+            action("Importar Imagen")
+            {
+                ApplicationArea = All;
+                Caption = 'Importar Imagen';
+                Image = Import;
+                ToolTip = 'Importar imagen para el coche.';
 
-            //         // trigger OnAction()
-            //         // begin
-            //         //     if not Confirm('¿Estás seguro de que deseas eliminar la imagen?', false) then
-            //         //         exit;
+                trigger OnAction()
+                var
+                    FromFileName: Text;
+                    InStreamPic: InStream;
+                begin
+                    if UploadIntoStream('Import', '', 'All Files (*.*)|*.*', FromFileName, InStreamPic) then begin
+                        Rec.Foto.ImportStream(InStreamPic, FromFileName);
+                        Rec.Modify(true);
+                    end;
+                    Message('Imagen Añadida.');
+                end;
+            }
+            action("Exportar Imagen")
+            {
+                ApplicationArea = All;
+                Caption = 'Exportar Imagen';
+                Image = Export;
+                ToolTip = 'Exportar imagen del coche.';
 
-            //         //     Rec.Foto; // Limpiar el campo `MediaSet`
-            //         //     CurrPage.Update(false); // Actualiza la página para reflejar el cambio
-            //         //     Message('Imagen eliminada.');
-            //         // end;
-            //     }
+                trigger OnAction()
+                var
+                    TenantMedia: Record "Tenant Media";
+                    DataCompression: Codeunit "Data Compression";
+                    TempBlob: Codeunit "Temp Blob";
+                    InStreamPic: InStream;
+                    i: Integer;
+                    ImageLbl: Label '%1_Image_%2.jpg', Comment = 'Imagen', Locked = true;
+                    OutStream: OutStream;
+                    FileName: Text;
+                    ZipFileName: Text;
+                begin
+                    ZipFileName := 'Image.zip';
+                    DataCompression.CreateZipArchive();
+                    for i := 1 to Rec.Foto.Count do begin
+                        if TenantMedia.Get(Rec.Foto.Item(i)) then
+                            TenantMedia.CalcFields(Content);
+                        if TenantMedia.Content.HasValue then begin
+                            Clear(InStreamPic);
+                            TenantMedia.Content.CreateInStream(InStreamPic);
+                            FileName := StrSubstNo(ImageLbl, Rec.TableCaption, i);
+                            DataCompression.AddEntry(InStreamPic, FileName);
+                        end;
+
+                    end;
+                    TempBlob.CreateOutStream(OutStream);
+                    DataCompression.SaveZipArchive(OutStream);
+                    TempBlob.CreateInStream(InStreamPic);
+                    DownloadFromStream(InStreamPic, '', '', '', ZipFileName);
+                    Message('Imagen Exportada.');
+                end;
+            }
+
         }
     }
 }
