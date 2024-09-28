@@ -30,9 +30,11 @@ table 50100 GCPCocheKPR
         {
             DataClassification = ToBeClassified;
         }
-        field(7; "FotoUrl"; Text[250])
+        field(7; "Foto"; MediaSet) // Campo de tipo MediaSet para almacenar la imagen del coche
         {
             DataClassification = ToBeClassified;
+            Caption = 'Foto del Coche';
+            ToolTip = 'Specifies the value of the Foto field.', Comment = '%';
         }
         field(8; "Kilometros"; Integer)
         {

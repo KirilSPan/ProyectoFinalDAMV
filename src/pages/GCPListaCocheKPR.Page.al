@@ -2,10 +2,10 @@ namespace ALProject.ALProject;
 
 page 50100 "GCPListaCocheKPR"
 {
-    PageType = List;
+    PageType = Card;
     SourceTable = GCPCocheKPR;
     ApplicationArea = All;
-    Caption = 'Lista de Coches';
+    Caption = 'Ficha del Coche';
     UsageCategory = Lists;
 
 
@@ -13,7 +13,7 @@ page 50100 "GCPListaCocheKPR"
     {
         area(content)
         {
-            repeater(Group)
+            group("Detalles del Coche")
             {
 
                 field(Marca; Rec.Marca)
@@ -44,11 +44,44 @@ page 50100 "GCPListaCocheKPR"
                 {
                     ToolTip = 'Specifies the value of the Anio field.', Comment = '%';
                 }
-                field(FotoUrl; Rec.FotoUrl)
+
+            }
+            group("Imagen del Coche") // Grupo para mostrar la imagen del coche
+            {
+                field(Foto; Rec."Foto")
                 {
-                    ToolTip = 'Specifies the value of the FotoUrl field.', Comment = '%';
+                    ApplicationArea = All;
+                    ShowCaption = false; // Mostrar la etiqueta "Foto"
+
+
                 }
             }
+
+
+
+
+        }
+    }
+    actions
+    {
+        area(processing)
+        {
+            //     action("Eliminar Imagen")
+            //     {
+            //         ApplicationArea = All;
+            //         Caption = 'Eliminar Imagen';
+            //         Image = Delete;
+
+            //         // trigger OnAction()
+            //         // begin
+            //         //     if not Confirm('¿Estás seguro de que deseas eliminar la imagen?', false) then
+            //         //         exit;
+
+            //         //     Rec.Foto; // Limpiar el campo `MediaSet`
+            //         //     CurrPage.Update(false); // Actualiza la página para reflejar el cambio
+            //         //     Message('Imagen eliminada.');
+            //         // end;
+            //     }
         }
     }
 }
