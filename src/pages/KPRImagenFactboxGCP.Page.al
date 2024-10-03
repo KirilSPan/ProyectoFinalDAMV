@@ -1,4 +1,4 @@
-namespace GCP.GCP;
+namespace KPR.GCP;
 
 using Microsoft.Inventory.Item;
 using System.Environment;

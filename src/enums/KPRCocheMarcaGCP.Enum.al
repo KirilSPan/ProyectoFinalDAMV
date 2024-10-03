@@ -1,4 +1,4 @@
-namespace GCP.GCP;
+namespace KPR.GCP;
 
 enum 50100 KPRCocheMarcaGCP
 {

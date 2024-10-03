@@ -1,3 +1,4 @@
+namespace KPR.GCP;
 table 50100 KPRCocheGCP
 {
     Caption = 'KPRCocheGCP';

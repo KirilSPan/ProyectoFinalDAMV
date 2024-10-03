@@ -1,4 +1,4 @@
-namespace GCP.GCP;
+namespace KPR.GCP;
 
 page 50102 KPRImagenListaGCP
 {

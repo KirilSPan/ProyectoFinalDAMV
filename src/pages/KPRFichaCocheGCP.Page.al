@@ -1,7 +1,7 @@
 namespace ALProject.ALProject;
 using System.Environment;
 using System.Utilities;
-using GCP.GCP;
+using KPR.GCP;
 using System.IO;
 
 page 50100 "KPRFichaCocheGCP"

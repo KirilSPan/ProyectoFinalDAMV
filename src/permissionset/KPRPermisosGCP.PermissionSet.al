@@ -1,4 +1,4 @@
-namespace ALProject.ALProject;
+namespace KPR.GCP;
 
 permissionset 50100 KPRPermisosGCP
 {
