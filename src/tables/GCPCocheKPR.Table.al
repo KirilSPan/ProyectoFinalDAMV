@@ -44,6 +44,9 @@ table 50100 GCPCocheKPR
 
     keys
     {
-        key(PK; "Id") { }
+        key(PK; "Id")
+        {
+            Clustered = true;
+        }
     }
 }

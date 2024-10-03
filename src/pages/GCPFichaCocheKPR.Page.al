@@ -4,7 +4,7 @@ using System.Utilities;
 using GCP.GCP;
 using System.IO;
 
-page 50100 "GCPListaCocheKPR"
+page 50100 "GCPFichaCocheKPR"
 {
     PageType = Card;
     SourceTable = GCPCocheKPR;
@@ -50,14 +50,14 @@ page 50100 "GCPListaCocheKPR"
                 }
 
             }
-            group("Imagen del Coche") // Grupo para mostrar la imagen del coche
-            {
-                field(Foto; Rec."Foto")
-                {
-                    ApplicationArea = All;
-                    ShowCaption = false; // Mostrar la etiqueta "Foto"
-                }
-            }
+            // group("Imagen del Coche") // Grupo para mostrar la imagen del coche
+            // {
+            //     field(Foto; Rec."Foto")
+            //     {
+            //         ApplicationArea = All;
+            //         ShowCaption = false; // Mostrar la etiqueta "Foto"
+            //     }
+            // }
         }
 
         area(FactBoxes)
