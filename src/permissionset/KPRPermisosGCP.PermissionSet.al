@@ -6,5 +6,7 @@ permissionset 50100 KPRPermisosGCP
     Caption = 'KPRPermisosGCP', MaxLength = 30;
     Permissions =
         table KPRCocheGCP = X,
-        tabledata KPRCocheGCP = RMID;
+        tabledata KPRCocheGCP = RMID,
+        table KPRPiezaGCP = X,
+        tabledata KPRPiezaGCP = RMID;
 }

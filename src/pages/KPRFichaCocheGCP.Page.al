@@ -10,7 +10,7 @@ page 50100 "KPRFichaCocheGCP"
     SourceTable = KPRCocheGCP;
     ApplicationArea = All;
     Caption = 'Ficha del Coche';
-    UsageCategory = Lists;
+    UsageCategory = Administration;
 
 
     layout
@@ -129,6 +129,25 @@ page 50100 "KPRFichaCocheGCP"
                     TempBlob.CreateInStream(InStreamPic);
                     DownloadFromStream(InStreamPic, '', '', '', ZipFileName);
                     Message('Imagen Exportada.');
+                end;
+            }
+
+
+            action("Eliminar Imagen")
+            {
+                ApplicationArea = All;
+                Caption = 'Eliminar Imagen';
+                Image = Delete;
+                ToolTip = 'Eliminar imagen del coche.';
+
+                trigger OnAction()
+                begin
+                    if not Confirm('¿Estás seguro de que deseas eliminar la imagen?', false) then
+                        exit;
+
+                    Rec."Foto".Remove(Rec."Foto".MediaId); // Limpiar el campo `MediaSet`
+                    CurrPage.Update(false); // Actualiza la página para reflejar el cambio
+                    Message('Imagen eliminada.');
                 end;
             }
 
