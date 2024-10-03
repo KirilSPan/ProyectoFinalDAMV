@@ -3,12 +3,12 @@ namespace GCP.GCP;
 using Microsoft.Inventory.Item;
 using System.Environment;
 
-page 50101 GCPImagenFactboxKPR
+page 50101 KPRImagenFactboxGCP
 {
     ApplicationArea = All;
     Caption = 'Imagen Factbox';
     PageType = CardPart;
-    SourceTable = GCPCocheKPR;
+    SourceTable = KPRCocheGCP;
     UsageCategory = Administration;
 
     layout

@@ -1,6 +1,6 @@
 namespace GCP.GCP;
 
-enum 50100 GCPCocheMarcaKPR
+enum 50100 KPRCocheMarcaGCP
 {
     Caption = 'Marcas de Coches';
     Extensible = true; // Permite que otros desarrolladores puedan extender el Enum con nuevas opciones

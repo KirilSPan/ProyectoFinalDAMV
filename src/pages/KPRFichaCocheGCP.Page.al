@@ -4,10 +4,10 @@ using System.Utilities;
 using GCP.GCP;
 using System.IO;
 
-page 50100 "GCPFichaCocheKPR"
+page 50100 "KPRFichaCocheGCP"
 {
     PageType = Card;
-    SourceTable = GCPCocheKPR;
+    SourceTable = KPRCocheGCP;
     ApplicationArea = All;
     Caption = 'Ficha del Coche';
     UsageCategory = Lists;
@@ -62,7 +62,7 @@ page 50100 "GCPFichaCocheKPR"
 
         area(FactBoxes)
         {
-            part(MediaFactbox; GCPImagenFactboxKPR)
+            part(MediaFactbox; KPRImagenFactboxGCP)
             {
                 ApplicationArea = all;
                 SubPageLink = Id = field(Id);

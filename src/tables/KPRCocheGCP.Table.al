@@ -1,6 +1,6 @@
-table 50100 GCPCocheKPR
+table 50100 KPRCocheGCP
 {
-    Caption = 'GCPCocheKPR';
+    Caption = 'KPRCocheGCP';
     DataClassification = ToBeClassified;
 
     fields
@@ -10,7 +10,7 @@ table 50100 GCPCocheKPR
             DataClassification = SystemMetadata;
             Editable = false;
         }
-        field(2; "Marca"; Enum GCPCocheMarcaKPR)
+        field(2; "Marca"; Enum KPRCocheMarcaGCP)
         {
             DataClassification = ToBeClassified;
         }

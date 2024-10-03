@@ -1,11 +1,11 @@
 namespace GCP.GCP;
 
-page 50102 GCPImagenListaKPR
+page 50102 KPRImagenListaGCP
 {
     ApplicationArea = All;
-    Caption = 'GCPImagenListaKPR';
+    Caption = 'KPRImagenListaGCP';
     PageType = List;
-    SourceTable = GCPCocheKPR;
+    SourceTable = KPRCocheGCP;
     UsageCategory = Lists;
 
     layout
@@ -24,7 +24,7 @@ page 50102 GCPImagenListaKPR
 
         area(FactBoxes)
         {
-            part(MediaFactbox; GCPImagenFactboxKPR)
+            part(MediaFactbox; KPRImagenFactboxGCP)
             {
                 ApplicationArea = all;
                 SubPageLink = Id = field(Id);
