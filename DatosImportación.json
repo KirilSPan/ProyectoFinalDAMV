@@ -1,0 +1,29 @@
+{
+    "Brands": [
+        {
+            "BrandCode": "AUDI",
+            "BrandName": "Audi",
+            "Models": [
+                {"ModelCode": "A3", "ModelName": "A3"},
+                {"ModelCode": "A4", "ModelName": "A4"},
+                {"ModelCode": "A6", "ModelName": "A6"}
+            ]
+        },
+        {
+            "BrandCode": "BMW",
+            "BrandName": "BMW",
+            "Models": [
+                {"ModelCode": "X1", "ModelName": "X1"},
+                {"ModelCode": "X3", "ModelName": "X3"}
+            ]
+        },
+        {
+            "BrandCode": "FORD",
+            "BrandName": "Ford",
+            "Models": [
+                {"ModelCode": "FOCUS", "ModelName": "Focus"},
+                {"ModelCode": "MUSTANG", "ModelName": "Mustang"}
+            ]
+        }
+    ]
+}
