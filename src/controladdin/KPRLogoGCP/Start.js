@@ -1,0 +1,1 @@
+document.getElementById("controlAddIn").insertAdjacentHTML('beforeend', '<img style="display: block; margin-left: auto; margin-right: auto;" src=" ' + Microsoft.Dynamics.NAV.GetImageResource('Logo/GCP.png') + '">');
