@@ -6,5 +6,6 @@ controladdin "KPRLogoGCP"
     HorizontalStretch = true;
     HorizontalShrink = true;
     RequestedHeight = 300;
+    RequestedWidth = 300;
     StartupScript = 'Start.js';
 }
