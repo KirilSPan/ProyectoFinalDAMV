@@ -1,8 +1,9 @@
-namespace ALProject.ALProject;
+namespace KPR.GCP;
 using System.Environment;
 using System.Utilities;
 using KPR.GCP;
 using System.IO;
+using GCP.GCP;
 
 page 50100 "KPRFichaCocheGCP"
 {
@@ -23,6 +24,56 @@ page 50100 "KPRFichaCocheGCP"
                 field(Marca; Rec.Marca)
                 {
                     ToolTip = 'Specifies the value of the Marca field.', Comment = '%';
+
+
+                    trigger OnLookup(var Text: Text): Boolean
+                    var
+                        CarBrandRec: Record KPRMarcaCocheGCP;
+                    begin
+                        // Mostrar la lista de marcas para seleccionar
+                        if PAGE.RunModal(PAGE::KPRListaMarcaGCP, CarBrandRec) = ACTION::LookupOK then begin
+                            Rec.Marca := CarBrandRec."Brand Name";
+                            Rec.Modify(true);
+
+                        end;
+                    end;
+
+                    trigger OnValidate()
+                    begin
+                        if Rec.Marca <> xRec.Marca then begin
+                            // Si la marca ha cambiado, limpiamos el campo del modelo
+                            Rec.Modelo := '';
+                            CurrPage.Update(false); // Refrescar la página para aplicar cambios
+                        end;
+                    end;
+                }
+                field(Modelo; Rec.Modelo)
+                {
+                    ToolTip = 'Specifies the value of the Modelo field.', Comment = '%';
+                    trigger OnLookup(var Text: Text): Boolean
+                    var
+                        CarModelRec: Record KPRModeloCocheGCP;
+                    begin
+                        // Filtrar modelos por la marca seleccionada
+                        CarModelRec.SetRange("Brand Code", Rec.Marca);
+                        if PAGE.RunModal(PAGE::KPRListaModeloGCP, CarModelRec) = ACTION::LookupOK then begin
+                            Rec.Modelo := CarModelRec."Model Name";
+                            Rec.Modify(true);
+                        end;
+                    end;
+
+                    trigger OnValidate()
+                    begin
+                        if Rec.Modelo = '' then
+                            Error('Seleccione un modelo válido para la marca seleccionada.');
+                    end;
+
+                    // Habilitar el campo solo si hay una marca seleccionada
+                    // Enabled = (Rec."Brand Code" <> '');
+                }
+                field(Id; Rec.Id)
+                {
+                    ToolTip = 'Specifies the value of the Id field.', Comment = '%';
                 }
                 field(TipoTransmision; Rec.TipoTransmision)
                 {
@@ -32,17 +83,9 @@ page 50100 "KPRFichaCocheGCP"
                 {
                     ToolTip = 'Specifies the value of the NumeroPuertas field.', Comment = '%';
                 }
-                field(Modelo; Rec.Modelo)
-                {
-                    ToolTip = 'Specifies the value of the Modelo field.', Comment = '%';
-                }
                 field(Kilometros; Rec.Kilometros)
                 {
                     ToolTip = 'Specifies the value of the Kilometros field.', Comment = '%';
-                }
-                field(Id; Rec.Id)
-                {
-                    ToolTip = 'Specifies the value of the Id field.', Comment = '%';
                 }
                 field(Anio; Rec.Anio)
                 {
@@ -58,6 +101,17 @@ page 50100 "KPRFichaCocheGCP"
             //         ShowCaption = false; // Mostrar la etiqueta "Foto"
             //     }
             // }
+            group("Piezas Sustituidas")
+            {
+
+                Caption = 'Piezas Sustituidas';
+
+                //TODO Este campo se quitara y se añadira una lista de las piezas que se guardara en otra tabla
+                field(SystemId; Rec.SystemId)
+                {
+                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
+                }
+            }
         }
 
         area(FactBoxes)
@@ -68,6 +122,9 @@ page 50100 "KPRFichaCocheGCP"
                 SubPageLink = Id = field(Id);
             }
         }
+
+
+
     }
     actions
     {
@@ -79,6 +136,10 @@ page 50100 "KPRFichaCocheGCP"
                 Caption = 'Importar Imagen';
                 Image = Import;
                 ToolTip = 'Importar imagen para el coche.';
+                Promoted = true;
+                PromotedIsBig = true;
+                // PromotedCategory = Category4;
+                // PromotedOnly = true;
 
                 trigger OnAction()
                 var
@@ -153,4 +214,7 @@ page 50100 "KPRFichaCocheGCP"
 
         }
     }
+
+
+
 }

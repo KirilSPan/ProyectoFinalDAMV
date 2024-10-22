@@ -6,12 +6,14 @@ table 50100 KPRCocheGCP
 
     fields
     {
-        field(1; "Id"; GUID)
+        //TODO cambiar que sea Code que coge siglas marca y modelo y le añade un numero
+        field(1; "Id"; Integer)
         {
             DataClassification = SystemMetadata;
             Editable = false;
+            AutoIncrement = true;
         }
-        field(2; "Marca"; Enum KPRCocheMarcaGCP)
+        field(2; "Marca"; Text[50])
         {
             DataClassification = ToBeClassified;
         }
@@ -19,11 +21,12 @@ table 50100 KPRCocheGCP
         {
             DataClassification = ToBeClassified;
         }
-        field(4; "Anio"; Integer)
+        field(4; "Anio"; Date)
         {
             DataClassification = ToBeClassified;
+            Caption = 'Año';
         }
-        field(5; "TipoTransmision"; Text[30])
+        field(5; "TipoTransmision"; Enum KPRTipoTransmisionGCP)
         {
             DataClassification = ToBeClassified;
         }
@@ -50,4 +53,15 @@ table 50100 KPRCocheGCP
             Clustered = true;
         }
     }
+
+    trigger OnModify()
+    begin
+        // Comprobar si la marca ha cambiado
+        if Rec.Marca <> xRec.Marca then begin
+            // Limpiar el modelo porque la marca ha cambiado
+            Validate(Modelo, '');
+            Rec.Modelo := '';
+            Rec.Modify(true);
+        end;
+    end;
 }

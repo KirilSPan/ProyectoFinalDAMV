@@ -1,6 +1,6 @@
-namespace ProyectoFinalDAMV.ProyectoFinalDAMV;
+namespace GCP.GCP;
 using Microsoft.Foundation.Company;
-using ALProject.ALProject;
+
 
 page 50103 KPRMenuGCP
 {
@@ -11,7 +11,7 @@ page 50103 KPRMenuGCP
     InsertAllowed = false;
     ModifyAllowed = false;
     RefreshOnActivate = true;
-    ShowFilter = false;
+    ShowFilter = true;
     UsageCategory = Administration;
     PromotedActionCategories = 'Administrar,Proceso,Informes,Listas,Tareas,Informes y análisis,Administración,Archivos,Objetos';
 
@@ -45,7 +45,8 @@ page 50103 KPRMenuGCP
                     PromotedOnly = true;
                     trigger OnAction()
                     begin
-                        Page.run(page::KPRFichaCocheGCP);
+                        //TODO Que apunte a una pagina tipo lista donde esten todos los coches y cuado se piche sobre un registro que lleve a la pagina de abajo con la ficha del coche
+                        Page.run(page::KPR.GCP.KPRFichaCocheGCP);
                     end;
                 }
             }
@@ -70,7 +71,7 @@ page 50103 KPRMenuGCP
                 action(CompanyInf)
                 {
                     ApplicationArea = All;
-                    Caption = 'Información Compañia';
+                    Caption = 'Info. Empresa';
                     ToolTip = 'Información de mi propia Compañia';
                     Image = CompanyInformation;
                     Promoted = true;

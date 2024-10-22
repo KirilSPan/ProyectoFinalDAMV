@@ -6,7 +6,7 @@ using System.Environment;
 page 50101 KPRImagenFactboxGCP
 {
     ApplicationArea = All;
-    Caption = 'Imagen Factbox';
+    Caption = 'Imagen/es del Coches';
     PageType = CardPart;
     SourceTable = KPRCocheGCP;
     UsageCategory = Administration;

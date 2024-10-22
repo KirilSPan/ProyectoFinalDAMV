@@ -1,4 +1,5 @@
 namespace KPR.GCP;
+using GCP.GCP;
 
 permissionset 50100 KPRPermisosGCP
 {
@@ -7,6 +8,13 @@ permissionset 50100 KPRPermisosGCP
     Permissions =
         table KPRCocheGCP = X,
         tabledata KPRCocheGCP = RMID,
+        page KPRFichaCocheGCP = X,
         table KPRPiezaGCP = X,
-        tabledata KPRPiezaGCP = RMID;
+        tabledata KPRPiezaGCP = RMID,
+        table KPRMarcaCocheGCP = X,
+        tabledata KPRMarcaCocheGCP = RMID,
+        page KPRListaMarcaGCP = X,
+        table KPRModeloCocheGCP = X,
+        tabledata KPRModeloCocheGCP = RMID,
+        page KPRListaModeloGCP = X;
 }

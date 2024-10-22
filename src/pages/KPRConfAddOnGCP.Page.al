@@ -1,4 +1,4 @@
-namespace ProyectoFinalDAMV.ProyectoFinalDAMV;
+namespace GCP.GCP;
 
 page 50104 KPRConfAddOnGCP
 {
