@@ -46,7 +46,7 @@ page 50103 KPRMenuGCP
                     trigger OnAction()
                     begin
                         //TODO Que apunte a una pagina tipo lista donde esten todos los coches y cuado se piche sobre un registro que lleve a la pagina de abajo con la ficha del coche
-                        Page.run(page::KPR.GCP.KPRFichaCocheGCP);
+                        Page.run(page::KPRListaCocheGCP);
                     end;
                 }
             }
