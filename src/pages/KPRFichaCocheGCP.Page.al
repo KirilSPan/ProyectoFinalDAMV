@@ -68,8 +68,6 @@ page 50100 "KPRFichaCocheGCP"
                             Error('Seleccione un modelo válido para la marca seleccionada.');
                     end;
 
-                    // Habilitar el campo solo si hay una marca seleccionada
-                    // Enabled = (Rec."Brand Code" <> '');
                 }
                 field(Id; Rec.Id)
                 {
@@ -120,10 +118,11 @@ page 50100 "KPRFichaCocheGCP"
             {
                 ApplicationArea = all;
                 SubPageLink = Id = field(Id);
+
             }
         }
 
-
+        //TODO Hacer un lispart para incluir las piezas
 
     }
     actions
@@ -139,7 +138,7 @@ page 50100 "KPRFichaCocheGCP"
                 Promoted = true;
                 PromotedIsBig = true;
                 // PromotedCategory = Category4;
-                // PromotedOnly = true;
+                PromotedOnly = true;
 
                 trigger OnAction()
                 var
@@ -159,6 +158,9 @@ page 50100 "KPRFichaCocheGCP"
                 Caption = 'Exportar Imagen';
                 Image = Export;
                 ToolTip = 'Exportar imagen del coche.';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedOnly = true;
 
                 trigger OnAction()
                 var
@@ -200,14 +202,24 @@ page 50100 "KPRFichaCocheGCP"
                 Caption = 'Eliminar Imagen';
                 Image = Delete;
                 ToolTip = 'Eliminar imagen del coche.';
+                Promoted = true;
+                PromotedIsBig = true;
+                PromotedOnly = true;
 
                 trigger OnAction()
+                var
+                    rlKPRCocheGCP: Record KPRCocheGCP;
+                    mediasetId: GUID;
                 begin
                     if not Confirm('¿Estás seguro de que deseas eliminar la imagen?', false) then
                         exit;
+                    rlKPRCocheGCP.Get(Rec.Id);
+                    mediasetId := Rec.Foto.MediaId;
 
-                    Rec."Foto".Remove(Rec."Foto".MediaId); // Limpiar el campo `MediaSet`
-                    CurrPage.Update(false); // Actualiza la página para reflejar el cambio
+                    Rec.Foto.Remove(mediasetId); // Limpiar el campo `MediaSet`
+                    Rec.Modify(true);
+                    Clear(Rec.Foto);
+                    CurrPage.Update(true); // Actualiza la página para reflejar el cambio
                     Message('Imagen eliminada.');
                 end;
             }

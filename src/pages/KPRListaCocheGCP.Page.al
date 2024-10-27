@@ -21,6 +21,7 @@ page 50107 KPRListaCocheGCP
         {
             repeater(Group)
             {
+
                 field(Id; Rec.Id)
                 {
                     ToolTip = 'Specifies the value of the Id field.', Comment = '%';

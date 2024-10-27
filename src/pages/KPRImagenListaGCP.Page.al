@@ -28,6 +28,7 @@ page 50102 KPRImagenListaGCP
             {
                 ApplicationArea = all;
                 SubPageLink = Id = field(Id);
+                UpdatePropagation = Both;
             }
         }
     }
