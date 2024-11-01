@@ -90,6 +90,13 @@ page 50100 "KPRFichaCocheGCP"
                     ToolTip = 'Specifies the value of the Anio field.', Comment = '%';
                 }
 
+                field("Cliente ID"; Rec."Cliente ID")
+                {
+                    ApplicationArea = All;
+                    Lookup = true;
+                    ToolTip = 'Selecciona el cliente propietario de este coche.';
+                }
+
             }
             // group("Imagen del Coche") // Grupo para mostrar la imagen del coche
             // {
@@ -168,25 +175,22 @@ page 50100 "KPRFichaCocheGCP"
                     DataCompression: Codeunit "Data Compression";
                     TempBlob: Codeunit "Temp Blob";
                     InStreamPic: InStream;
-                    i: Integer;
-                    ImageLbl: Label '%1_Image_%2.jpg', Comment = 'Imagen', Locked = true;
+                    ImageLbl: Label '%1_Image.jpg', Comment = 'Imagen', Locked = true;
                     OutStream: OutStream;
                     FileName: Text;
                     ZipFileName: Text;
                 begin
                     ZipFileName := 'Image.zip';
                     DataCompression.CreateZipArchive();
-                    for i := 1 to Rec.Foto.Count do begin
-                        if TenantMedia.Get(Rec.Foto.Item(i)) then
-                            TenantMedia.CalcFields(Content);
-                        if TenantMedia.Content.HasValue then begin
-                            Clear(InStreamPic);
-                            TenantMedia.Content.CreateInStream(InStreamPic);
-                            FileName := StrSubstNo(ImageLbl, Rec.TableCaption, i);
-                            DataCompression.AddEntry(InStreamPic, FileName);
-                        end;
-
+                    if TenantMedia.Get(Rec.Foto.MediaId) then
+                        TenantMedia.CalcFields(Content);
+                    if TenantMedia.Content.HasValue then begin
+                        Clear(InStreamPic);
+                        TenantMedia.Content.CreateInStream(InStreamPic);
+                        FileName := StrSubstNo(ImageLbl, Rec.TableCaption);
+                        DataCompression.AddEntry(InStreamPic, FileName);
                     end;
+
                     TempBlob.CreateOutStream(OutStream);
                     DataCompression.SaveZipArchive(OutStream);
                     TempBlob.CreateInStream(InStreamPic);
@@ -216,7 +220,7 @@ page 50100 "KPRFichaCocheGCP"
                     rlKPRCocheGCP.Get(Rec.Id);
                     mediasetId := Rec.Foto.MediaId;
 
-                    Rec.Foto.Remove(mediasetId); // Limpiar el campo `MediaSet`
+                    Clear(Rec.Foto);
                     Rec.Modify(true);
                     Clear(Rec.Foto);
                     CurrPage.Update(true); // Actualiza la página para reflejar el cambio

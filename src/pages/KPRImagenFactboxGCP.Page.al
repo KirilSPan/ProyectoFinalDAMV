@@ -6,7 +6,7 @@ using System.Environment;
 page 50101 KPRImagenFactboxGCP
 {
     ApplicationArea = All;
-    Caption = 'Imagen/es del Coches';
+    Caption = 'Imagen del Coches';
     PageType = CardPart;
     SourceTable = KPRCocheGCP;
     UsageCategory = Administration;
@@ -18,6 +18,7 @@ page 50101 KPRImagenFactboxGCP
 
             field(Foto; Rec.Foto)
             {
+                ShowCaption = false; // Ocultar el caption
                 ToolTip = 'Specifies the value of the Foto del Coche field.', Comment = '%';
             }
         }

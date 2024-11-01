@@ -5,8 +5,10 @@ using System.Text;
 
 codeunit 50100 KPRFuncionesGCP
 {
-    SingleInstance = false;
-    Subtype = Normal;
+    // SingleInstance = false;
+    // Subtype = Normal;
+    var
+    // gFoto: Blob;
 
     /// <summary>
     /// ImportacionMapeoDatosF.

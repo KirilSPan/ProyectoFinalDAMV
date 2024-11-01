@@ -39,7 +39,7 @@ table 50101 KPRPiezaGCP
         {
             DataClassification = ToBeClassified;
         }
-        field(9; "CocheId"; GUID)
+        field(9; "CocheId"; Integer)
         {
             DataClassification = SystemMetadata;
             TableRelation = KPRCocheGCP."Id";

@@ -1,4 +1,6 @@
 namespace KPR.GCP;
+
+using Microsoft.Sales.Customer;
 table 50100 KPRCocheGCP
 {
     Caption = 'KPRCocheGCP';
@@ -34,15 +36,22 @@ table 50100 KPRCocheGCP
         {
             DataClassification = ToBeClassified;
         }
-        field(7; "Foto"; MediaSet) // Campo de tipo MediaSet para almacenar la imagen del coche
+        field(7; "Foto"; Media) // Campo de tipo MediaSet para almacenar la imagen del coche
         {
             DataClassification = ToBeClassified;
             Caption = 'Foto del Coche';
             ToolTip = 'Specifies the value of the Foto field.', Comment = '%';
+            // Subtype = Bitmap;
         }
         field(8; "Kilometros"; Integer)
         {
             DataClassification = ToBeClassified;
+        }
+        field(9; "Cliente ID"; Code[20])
+        {
+            Caption = 'Cliente ID';
+            TableRelation = Customer."No."; // Relacionar con el campo "No." de la tabla de clientes
+            DataClassification = CustomerContent;
         }
     }
 
