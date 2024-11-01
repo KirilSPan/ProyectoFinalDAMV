@@ -39,16 +39,16 @@ table 50101 KPRPiezaGCP
         {
             DataClassification = ToBeClassified;
         }
-        field(9; "CocheId"; Integer)
+        field(9; "Matricula"; Text[10])
         {
             DataClassification = SystemMetadata;
-            TableRelation = KPRCocheGCP."Id";
+            TableRelation = KPRCocheGCP."Matrícula";
         }
     }
 
     keys
     {
         key(PK; "IdPieza") { }
-        key(Secondary; "CocheId", "IdPieza") { }
+        key(Secondary; "Matricula", "IdPieza") { }
     }
 }

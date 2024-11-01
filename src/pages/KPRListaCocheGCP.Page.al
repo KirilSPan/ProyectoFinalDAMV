@@ -22,10 +22,10 @@ page 50107 KPRListaCocheGCP
             repeater(Group)
             {
 
-                field(Id; Rec.Id)
+                field(Id; Rec."Matrícula")
                 {
                     ToolTip = 'Specifies the value of the Id field.', Comment = '%';
-                    Caption = 'ID del Coche';
+                    Caption = 'Matrícula del Coche';
 
                     trigger OnDrillDown()
                     begin
@@ -44,7 +44,7 @@ page 50107 KPRListaCocheGCP
                 {
                     ToolTip = 'Specifies the value of the Kilometros field.', Comment = '%';
                 }
-                field(Anio; Rec.Anio)
+                field(Anio; Rec."Fecha de Matriculación")
                 {
                     ToolTip = 'Specifies the value of the Anio field.', Comment = '%';
                 }
@@ -106,5 +106,11 @@ page 50107 KPRListaCocheGCP
             }
         }
     }
+
+    trigger OnInsertRecord(Below: Boolean): Boolean
+    begin
+        if Rec."Matrícula" = '' then
+            Rec.Delete(false);
+    end;
 
 }

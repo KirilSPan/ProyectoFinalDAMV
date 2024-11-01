@@ -14,10 +14,7 @@ page 50106 KPRListaModeloGCP
         {
             repeater(General)
             {
-                field("Model Code"; Rec."Model Code")
-                {
-                    ToolTip = 'Specifies the value of the Model Code field.', Comment = '%';
-                }
+
                 field("Model Name"; Rec."Model Name")
                 {
                     ToolTip = 'Specifies the value of the Model Name field.', Comment = '%';

@@ -27,7 +27,7 @@ page 50102 KPRImagenListaGCP
             part(MediaFactbox; KPRImagenFactboxGCP)
             {
                 ApplicationArea = all;
-                SubPageLink = Id = field(Id);
+                SubPageLink = "Matrícula" = field("Matrícula");
                 UpdatePropagation = Both;
             }
         }

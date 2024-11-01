@@ -20,22 +20,33 @@ page 50100 "KPRFichaCocheGCP"
         {
             group("Detalles del Coche")
             {
+                field("Matrícula"; Rec."Matrícula")
+                {
+                    ToolTip = 'Specifies the value of the Matrícula field.', Comment = '%';
+                    trigger OnValidate()
+                    begin
+                        // Si la matrícula no está vacía, actualiza la página para mostrar el campo Marca
+                        if Rec."Matrícula" <> '' then
+                            CurrPage.Update(false);
+                    end;
+                }
 
                 field(Marca; Rec.Marca)
                 {
                     ToolTip = 'Specifies the value of the Marca field.', Comment = '%';
 
-
                     trigger OnLookup(var Text: Text): Boolean
                     var
                         CarBrandRec: Record KPRMarcaCocheGCP;
                     begin
-                        // Mostrar la lista de marcas para seleccionar
-                        if PAGE.RunModal(PAGE::KPRListaMarcaGCP, CarBrandRec) = ACTION::LookupOK then begin
-                            Rec.Marca := CarBrandRec."Brand Name";
-                            Rec.Modify(true);
+                        if Rec."Matrícula" <> '' then
+                            // Mostrar la lista de marcas para seleccionar
+                            if PAGE.RunModal(PAGE::KPRListaMarcaGCP, CarBrandRec) = ACTION::LookupOK then begin
+                                Rec.Marca := CarBrandRec."Brand Name";
+                                Rec.Modify();
+                                CurrPage.Update(false);
 
-                        end;
+                            end;
                     end;
 
                     trigger OnValidate()
@@ -45,6 +56,7 @@ page 50100 "KPRFichaCocheGCP"
                             Rec.Modelo := '';
                             CurrPage.Update(false); // Refrescar la página para aplicar cambios
                         end;
+
                     end;
                 }
                 field(Modelo; Rec.Modelo)
@@ -54,11 +66,14 @@ page 50100 "KPRFichaCocheGCP"
                     var
                         CarModelRec: Record KPRModeloCocheGCP;
                     begin
-                        // Filtrar modelos por la marca seleccionada
-                        CarModelRec.SetRange("Brand Code", Rec.Marca);
-                        if PAGE.RunModal(PAGE::KPRListaModeloGCP, CarModelRec) = ACTION::LookupOK then begin
-                            Rec.Modelo := CarModelRec."Model Name";
-                            Rec.Modify(true);
+                        if Rec.Marca <> '' then begin
+                            // Filtrar modelos por la marca seleccionada
+                            CarModelRec.SetRange("Brand Code", Rec.Marca);
+                            if PAGE.RunModal(PAGE::KPRListaModeloGCP, CarModelRec) = ACTION::LookupOK then begin
+                                Rec.Modelo := CarModelRec."Model Name";
+                                Rec.Modify();
+                                CurrPage.Update(false);
+                            end;
                         end;
                     end;
 
@@ -68,10 +83,6 @@ page 50100 "KPRFichaCocheGCP"
                             Error('Seleccione un modelo válido para la marca seleccionada.');
                     end;
 
-                }
-                field(Id; Rec.Id)
-                {
-                    ToolTip = 'Specifies the value of the Id field.', Comment = '%';
                 }
                 field(TipoTransmision; Rec.TipoTransmision)
                 {
@@ -84,8 +95,9 @@ page 50100 "KPRFichaCocheGCP"
                 field(Kilometros; Rec.Kilometros)
                 {
                     ToolTip = 'Specifies the value of the Kilometros field.', Comment = '%';
+
                 }
-                field(Anio; Rec.Anio)
+                field(Anio; Rec."Fecha de Matriculación")
                 {
                     ToolTip = 'Specifies the value of the Anio field.', Comment = '%';
                 }
@@ -124,7 +136,7 @@ page 50100 "KPRFichaCocheGCP"
             part(MediaFactbox; KPRImagenFactboxGCP)
             {
                 ApplicationArea = all;
-                SubPageLink = Id = field(Id);
+                SubPageLink = "Matrícula" = field("Matrícula");
 
             }
         }
@@ -217,7 +229,7 @@ page 50100 "KPRFichaCocheGCP"
                 begin
                     if not Confirm('¿Estás seguro de que deseas eliminar la imagen?', false) then
                         exit;
-                    rlKPRCocheGCP.Get(Rec.Id);
+                    rlKPRCocheGCP.Get(Rec."Matrícula");
                     mediasetId := Rec.Foto.MediaId;
 
                     Clear(Rec.Foto);
@@ -230,7 +242,5 @@ page 50100 "KPRFichaCocheGCP"
 
         }
     }
-
-
 
 }

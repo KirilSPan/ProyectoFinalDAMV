@@ -8,7 +8,20 @@ codeunit 50100 KPRFuncionesGCP
     // SingleInstance = false;
     // Subtype = Normal;
     var
-    // gFoto: Blob;
+        // gFoto: Blob;
+        VisibleControl: Boolean;
+
+    // Getter para VisibleControl
+    procedure GetVisibleControl(): Boolean
+    begin
+        exit(VisibleControl);
+    end;
+
+    // Setter para VisibleControl
+    procedure SetVisibleControl(NewValue: Boolean)
+    begin
+        VisibleControl := NewValue;
+    end;
 
     /// <summary>
     /// ImportacionMapeoDatosF.
