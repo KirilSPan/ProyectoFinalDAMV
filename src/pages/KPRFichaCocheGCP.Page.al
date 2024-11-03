@@ -110,14 +110,6 @@ page 50100 "KPRFichaCocheGCP"
                 }
 
             }
-            // group("Imagen del Coche") // Grupo para mostrar la imagen del coche
-            // {
-            //     field(Foto; Rec."Foto")
-            //     {
-            //         ApplicationArea = All;
-            //         ShowCaption = false; // Mostrar la etiqueta "Foto"
-            //     }
-            // }
             group("Piezas Sustituidas")
             {
 
@@ -126,6 +118,7 @@ page 50100 "KPRFichaCocheGCP"
                 {
                     ApplicationArea = All;
                     SubPageLink = "Matricula" = field("Matrícula"); // Vincula la subpágina al coche actual
+                    // UpdatePropagation = Both;
                 }
             }
         }
@@ -245,4 +238,9 @@ page 50100 "KPRFichaCocheGCP"
             }
         }
     }
+
+    trigger OnAfterGetRecord();
+    begin
+        CurrPage.PiezasSustituidasPart.PAGE.SetMatrículaFiltro(Rec."Matrícula"); // Envía la matrícula a la subpágina
+    end;
 }

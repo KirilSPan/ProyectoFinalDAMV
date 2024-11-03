@@ -45,8 +45,23 @@ page 50103 KPRMenuGCP
                     PromotedOnly = true;
                     trigger OnAction()
                     begin
-                        //TODO Que apunte a una pagina tipo lista donde esten todos los coches y cuado se piche sobre un registro que lleve a la pagina de abajo con la ficha del coche
                         Page.run(page::KPRListaCocheGCP);
+                    end;
+                }
+
+                action(ListaPiezas)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Lista de Piezas';
+                    ToolTip = 'Para ver lista de piezas por matrícula y añadir/modificar o eliminar registro';
+                    Image = PutawayLines;
+                    Promoted = true;
+                    PromotedCategory = Category4;
+                    PromotedIsBig = true;
+                    PromotedOnly = true;
+                    trigger OnAction()
+                    begin
+                        Page.run(page::KPRGestionPiezaPorMatriculaGCP);
                     end;
                 }
             }

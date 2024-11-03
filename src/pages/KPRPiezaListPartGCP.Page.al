@@ -32,9 +32,10 @@ page 50108 KPRPiezaListPartGCP
                 {
                     ToolTip = 'Specifies the value of the FechaCambio field.', Comment = '%';
                 }
-                field(CambiadoPor; Rec.CambiadoPor)
+                field(ProveedorPieza; Rec.ProveedorPieza)
                 {
-                    ToolTip = 'Specifies the value of the CambiadoPor field.', Comment = '%';
+                    ToolTip = 'Specifies the value of the ProveedorPieza field.', Comment = '%';
+                    Lookup = true;
                 }
                 field(ResponsableSustitucion; Rec.ResponsableSustitucion)
                 {
@@ -51,8 +52,39 @@ page 50108 KPRPiezaListPartGCP
                 field(Matricula; Rec.Matricula)
                 {
                     ToolTip = 'Specifies the value of the Matricula field.', Comment = '%';
+                    Caption = 'Matrícula';
+                    Editable = false;
                 }
             }
         }
     }
+
+    var
+        MatriculaFiltro: Text[10];
+
+    procedure SetMatrículaFiltro(pMatricula: Text[10])
+    begin
+        Clear(Rec); // Limpia cualquier filtro previo en los registros
+        Rec.SetRange(Matricula, pMatricula); // Aplica el filtro de matrícula
+        CurrPage.Update(false);
+        MatriculaFiltro := pMatricula;
+    end;
+
+    procedure getMatrículaFiltro(): Text[10]
+    begin
+        exit(MatriculaFiltro);
+    end;
+
+    trigger OnNewRecord(Belowxrec: Boolean)
+    var
+        xlMatricula: Text[10];
+    begin
+        xlMatricula := getMatrículaFiltro();
+        if Rec.Matricula = '' then begin
+            Rec.Matricula := xlMatricula;
+            Rec.Modify(false);
+            CurrPage.Update(false);
+        end;
+    end;
+
 }

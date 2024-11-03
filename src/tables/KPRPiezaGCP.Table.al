@@ -1,6 +1,8 @@
 namespace KPR.GCP;
 
 using GCP.GCP;
+using Microsoft.Purchases.Vendor;
+using Microsoft.HumanResources.Employee;
 table 50101 KPRPiezaGCP
 {
     Caption = 'KPRPiezaGCP';
@@ -17,17 +19,21 @@ table 50101 KPRPiezaGCP
         {
             DataClassification = ToBeClassified;
         }
-        field(3; "Estado"; Text[30])
+        field(3; "Estado"; Enum KPREstadoPiezaGCP)
         {
             DataClassification = ToBeClassified;
         }
-        field(4; "CambiadoPor"; Text[50])
+        field(4; "ProveedorPieza"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Vendor."No."; // Relación con la tabla Vendor por el campo No.
+            ToolTip = 'Proveedor de la pieza.';
         }
-        field(5; "ResponsableSustitucion"; Text[50])
+        field(5; "ResponsableSustitucion"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Employee."No."; // Relación con la tabla de Empleados por el campo No.
+            ToolTip = 'El empleado responsable de realizar la sustitución de la pieza.';
         }
         field(6; "FechaCambio"; Date)
         {
@@ -43,13 +49,14 @@ table 50101 KPRPiezaGCP
         }
         field(9; "Matricula"; Text[10])
         {
-            DataClassification = SystemMetadata;
+            DataClassification = ToBeClassified;
+            TableRelation = KPRCocheGCP."Matrícula" where("Matrícula" = field(Matricula));
         }
     }
 
     keys
     {
         key(PK; "IdPieza") { }
+        key(SecondKey; Matricula) { }
     }
-
 }

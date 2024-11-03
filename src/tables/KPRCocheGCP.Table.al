@@ -10,7 +10,6 @@ table 50100 KPRCocheGCP
 
     fields
     {
-        //TODO cambiar que sea Code que coge siglas marca y modelo y le añade un numero
         field(1; "Matrícula"; Text[10])
         {
             Caption = 'Matrícula';
