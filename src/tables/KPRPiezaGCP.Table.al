@@ -1,4 +1,6 @@
 namespace KPR.GCP;
+
+using GCP.GCP;
 table 50101 KPRPiezaGCP
 {
     Caption = 'KPRPiezaGCP';
@@ -42,13 +44,12 @@ table 50101 KPRPiezaGCP
         field(9; "Matricula"; Text[10])
         {
             DataClassification = SystemMetadata;
-            TableRelation = KPRCocheGCP."Matrícula";
         }
     }
 
     keys
     {
         key(PK; "IdPieza") { }
-        key(Secondary; "Matricula", "IdPieza") { }
     }
+
 }

@@ -122,11 +122,10 @@ page 50100 "KPRFichaCocheGCP"
             {
 
                 Caption = 'Piezas Sustituidas';
-
-                //TODO Este campo se quitara y se añadira una lista de las piezas que se guardara en otra tabla
-                field(SystemId; Rec.SystemId)
+                part(PiezasSustituidasPart; KPRPiezaListPartGCP)
                 {
-                    ToolTip = 'Specifies the value of the SystemId field.', Comment = '%';
+                    ApplicationArea = All;
+                    SubPageLink = "Matricula" = field("Matrícula"); // Vincula la subpágina al coche actual
                 }
             }
         }
@@ -141,12 +140,10 @@ page 50100 "KPRFichaCocheGCP"
             }
         }
 
-        //TODO Hacer un lispart para incluir las piezas
-
     }
     actions
     {
-        area(processing)
+        area(Creation)
         {
             action("Importar Imagen")
             {
@@ -156,7 +153,7 @@ page 50100 "KPRFichaCocheGCP"
                 ToolTip = 'Importar imagen para el coche.';
                 Promoted = true;
                 PromotedIsBig = true;
-                // PromotedCategory = Category4;
+                PromotedCategory = New;
                 PromotedOnly = true;
 
                 trigger OnAction()
@@ -171,6 +168,11 @@ page 50100 "KPRFichaCocheGCP"
                     Message('Imagen Añadida.');
                 end;
             }
+        }
+
+
+        area(Processing)
+        {
             action("Exportar Imagen")
             {
                 ApplicationArea = All;
@@ -178,6 +180,7 @@ page 50100 "KPRFichaCocheGCP"
                 Image = Export;
                 ToolTip = 'Exportar imagen del coche.';
                 Promoted = true;
+                PromotedCategory = Process;
                 PromotedIsBig = true;
                 PromotedOnly = true;
 
@@ -220,6 +223,7 @@ page 50100 "KPRFichaCocheGCP"
                 ToolTip = 'Eliminar imagen del coche.';
                 Promoted = true;
                 PromotedIsBig = true;
+                PromotedCategory = Process;
                 PromotedOnly = true;
 
                 trigger OnAction()
@@ -239,8 +243,6 @@ page 50100 "KPRFichaCocheGCP"
                     Message('Imagen eliminada.');
                 end;
             }
-
         }
     }
-
 }

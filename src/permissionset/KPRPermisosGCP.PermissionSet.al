@@ -11,6 +11,7 @@ permissionset 50100 KPRPermisosGCP
         page KPRFichaCocheGCP = X,
         table KPRPiezaGCP = X,
         tabledata KPRPiezaGCP = RMID,
+        page KPRPiezaListPartGCP = X,
         table KPRMarcaCocheGCP = X,
         tabledata KPRMarcaCocheGCP = RMID,
         page KPRListaMarcaGCP = X,
