@@ -61,7 +61,7 @@ page 50103 KPRMenuGCP
                     PromotedOnly = true;
                     trigger OnAction()
                     begin
-                        Page.run(page::KPRGestionPiezaPorMatriculaGCP);
+                        Page.run(page::KPRPiezaPorMatriculaGCP);
                     end;
                 }
             }

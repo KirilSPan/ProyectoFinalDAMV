@@ -2,7 +2,7 @@ namespace GCP.GCP;
 
 using KPR.GCP;
 
-page 50109 KPRGestionPiezaPorMatriculaGCP
+page 50109 KPRPiezaPorMatriculaGCP
 {
     ApplicationArea = All;
     Caption = 'Gestión de Piezas Por Matrícula';
