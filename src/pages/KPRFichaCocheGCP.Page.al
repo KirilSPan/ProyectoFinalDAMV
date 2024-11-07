@@ -3,6 +3,7 @@ using System.Environment;
 using System.Utilities;
 using KPR.GCP;
 using System.IO;
+using Microsoft.Sales.Archive;
 using GCP.GCP;
 
 page 50100 "KPRFichaCocheGCP"
@@ -237,6 +238,7 @@ page 50100 "KPRFichaCocheGCP"
                 end;
             }
         }
+
     }
 
     trigger OnAfterGetRecord();

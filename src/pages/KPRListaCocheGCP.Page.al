@@ -105,6 +105,28 @@ page 50107 KPRListaCocheGCP
                 end;
             }
         }
+
+        area(Reporting)
+        {
+            action("Generar Informe de Piezas")
+            {
+                Caption = 'Generar Informe de Piezas';
+                ApplicationArea = All;
+                Image = Print;
+                Promoted = true;
+                PromotedCategory = Report;
+                PromotedOnly = true;
+                ToolTip = 'Genera un informe de piezas asociadas a este coche.';
+
+                trigger OnAction()
+                var
+                // PiezasReport: Report "Informe de Piezas GCP";
+                begin
+                    // Ejecuta el informe mostrando primero la RequestPage para seleccionar filtros
+                    REPORT.RunModal(Report::KPRInformePiezasGCP);
+                end;
+            }
+        }
     }
 
     trigger OnInsertRecord(Below: Boolean): Boolean
