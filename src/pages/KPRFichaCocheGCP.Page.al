@@ -5,6 +5,7 @@ using KPR.GCP;
 using System.IO;
 using Microsoft.Sales.Archive;
 using GCP.GCP;
+using Microsoft.Inventory.Item;
 
 page 50100 "KPRFichaCocheGCP"
 {
@@ -44,21 +45,26 @@ page 50100 "KPRFichaCocheGCP"
                             // Mostrar la lista de marcas para seleccionar
                             if PAGE.RunModal(PAGE::KPRListaMarcaGCP, CarBrandRec) = ACTION::LookupOK then begin
                                 Rec.Marca := CarBrandRec."Brand Name";
+                                Rec.Modelo := '';
+                                brandCode := CarBrandRec."Brand Code";
                                 Rec.Modify();
                                 CurrPage.Update(false);
 
                             end;
                     end;
 
-                    trigger OnValidate()
-                    begin
-                        if Rec.Marca <> xRec.Marca then begin
-                            // Si la marca ha cambiado, limpiamos el campo del modelo
-                            Rec.Modelo := '';
-                            CurrPage.Update(false); // Refrescar la página para aplicar cambios
-                        end;
+                    // trigger OnValidate()
 
-                    end;
+                    // begin
+                    //     if Rec.Marca <> xRec.Marca then
+                    //         // begin
+                    //         // Si la marca ha cambiado, limpiamos el campo del modelo
+                    //         Rec.Modelo := '';
+                    //     // Rec.Modify();
+                    //     // CurrPage.Update(false); // Refrescar la página para aplicar cambios
+                    //     // end;
+
+                    // end;
                 }
                 field(Modelo; Rec.Modelo)
                 {
@@ -69,7 +75,7 @@ page 50100 "KPRFichaCocheGCP"
                     begin
                         if Rec.Marca <> '' then begin
                             // Filtrar modelos por la marca seleccionada
-                            CarModelRec.SetRange("Brand Code", Rec.Marca);
+                            CarModelRec.SetRange("Brand Code", brandCode);
                             if PAGE.RunModal(PAGE::KPRListaModeloGCP, CarModelRec) = ACTION::LookupOK then begin
                                 Rec.Modelo := CarModelRec."Model Name";
                                 Rec.Modify();
@@ -82,6 +88,7 @@ page 50100 "KPRFichaCocheGCP"
                     begin
                         if Rec.Modelo = '' then
                             Error('Seleccione un modelo válido para la marca seleccionada.');
+
                     end;
 
                 }
@@ -245,4 +252,7 @@ page 50100 "KPRFichaCocheGCP"
     begin
         CurrPage.PiezasSustituidasPart.PAGE.SetMatrículaFiltro(Rec."Matrícula"); // Envía la matrícula a la subpágina
     end;
+
+    var
+        brandCode: Code[10];
 }

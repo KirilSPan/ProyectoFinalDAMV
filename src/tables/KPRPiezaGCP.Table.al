@@ -38,6 +38,7 @@ table 50101 KPRPiezaGCP
         field(6; "FechaCambio"; Date)
         {
             DataClassification = ToBeClassified;
+            NotBlank = true;
         }
         field(7; "Precio"; Decimal)
         {

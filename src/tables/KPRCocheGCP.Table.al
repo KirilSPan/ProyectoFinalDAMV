@@ -91,12 +91,12 @@ table 50100 KPRCocheGCP
     begin
 
         // Comprobar si la marca ha cambiado
-        if Rec.Marca <> xRec.Marca then begin
-            // Limpiar el modelo porque la marca ha cambiado
-            Validate(Modelo, '');
-            Rec.Modelo := '';
-            Rec.Modify(true);
-        end;
+        // if Rec.Marca = xRec.Marca then begin
+        //     // Limpiar el modelo porque la marca ha cambiado
+        //     Validate(Modelo, '');
+        //     Rec.Modelo := '';
+        //     Rec.Modify();
+        // end;
     end;
 
     local procedure IsValidSpanishPlate(plate: Text[10]): Boolean

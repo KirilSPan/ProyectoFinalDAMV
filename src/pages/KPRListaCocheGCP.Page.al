@@ -1,6 +1,7 @@
 namespace GCP.GCP;
 
 using KPR.GCP;
+using System.Utilities;
 
 page 50107 KPRListaCocheGCP
 {
@@ -104,6 +105,19 @@ page 50107 KPRListaCocheGCP
                         Rec.Delete();
                 end;
             }
+
+            action(ImportMarcasYModelos)
+            {
+                Caption = 'Importar Marcas y sus modelos';
+                ToolTip = 'Para importar Marcas de vehiculos y sus modelos.';
+                Image = Excel;
+
+                trigger OnAction()
+                begin
+                    ReadExcelSheet();
+                    ImportExcelData();
+                end;
+            }
         }
 
         area(Reporting)
@@ -119,8 +133,6 @@ page 50107 KPRListaCocheGCP
                 ToolTip = 'Genera un informe de piezas asociadas a este coche.';
 
                 trigger OnAction()
-                var
-                // PiezasReport: Report "Informe de Piezas GCP";
                 begin
                     // Ejecuta el informe mostrando primero la RequestPage para seleccionar filtros
                     REPORT.RunModal(Report::KPRInformePiezasGCP);
@@ -135,4 +147,83 @@ page 50107 KPRListaCocheGCP
             Rec.Delete(false);
     end;
 
+
+    var
+        TempExcelBuffer: Record System.IO."Excel Buffer" temporary;
+        FileName: Text[100];
+        SheetName: Text[250];
+        UploadExcelMsg: Label 'Por favor elige el archivo Excel.';
+        NoFileFoundMsg: Label 'Archivo Excel no proporcionado!';
+        ExcelImportSucessMsg: Label 'Excel añadido.';
+
+    local procedure ReadExcelSheet()
+    var
+        FileMgt: Codeunit System.IO."File Management";
+        IStream: InStream;
+        FromFile: Text;
+    begin
+        UploadIntoStream(UploadExcelMsg, '', '', FromFile, IStream);
+        if FromFile <> '' then begin
+            FileName := Format(FileMgt.GetFileName(FromFile));
+            SheetName := TempExcelBuffer.SelectSheetsNameStream(IStream);
+        end else
+            Error(NoFileFoundMsg);
+        TempExcelBuffer.Reset();
+        TempExcelBuffer.DeleteAll();
+        TempExcelBuffer.OpenBookStream(IStream, SheetName);
+        TempExcelBuffer.ReadSheet();
+    end;
+
+    local procedure ImportExcelData()
+    var
+        MarcaRec: Record KPRMarcaCocheGCP;
+        ModeloRec: Record KPRModeloCocheGCP;
+        RowNo: Integer;
+        MaxRowNo: Integer;
+        MarcaCode: Text;
+        MarcaName: Text;
+        ModelCode: Text;
+        ModelName: Text;
+    begin
+        RowNo := 0;
+        MaxRowNo := 0;
+
+        TempExcelBuffer.Reset();
+        if TempExcelBuffer.FindLast() then
+            MaxRowNo := TempExcelBuffer."Row No.";
+
+
+        for RowNo := 2 to MaxRowNo do begin
+            MarcaCode := GetValueAtCell(RowNo, 1);
+            MarcaName := GetValueAtCell(RowNo, 2);
+            ModelCode := GetValueAtCell(RowNo, 3);
+            ModelName := GetValueAtCell(RowNo, 4);
+
+            // Insertar o actualizar Marca
+            if not MarcaRec.Get(MarcaCode) then begin
+                MarcaRec.Init();
+                MarcaRec."Brand Code" := Format(MarcaCode);
+                MarcaRec."Brand Name" := Format(MarcaName);
+                MarcaRec.Insert();
+            end;
+
+            // Insertar Modelo asociado a la Marca
+            ModeloRec.Init();
+            ModeloRec."Model Code" := Format(ModelCode);
+            ModeloRec."Model Name" := Format(ModelName);
+            ModeloRec."Brand Code" := Format(MarcaCode);
+            ModeloRec.Insert();
+        end;
+        Message(ExcelImportSucessMsg);
+    end;
+
+    local procedure GetValueAtCell(RowNo: Integer; ColNo: Integer): Text
+    begin
+
+        TempExcelBuffer.Reset();
+        if TempExcelBuffer.Get(RowNo, ColNo) then
+            exit(TempExcelBuffer."Cell Value as Text")
+        else
+            exit('');
+    end;
 }

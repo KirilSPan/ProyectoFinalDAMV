@@ -17,6 +17,7 @@ page 50104 KPRConfAddOnGCP
                 Caption = 'General - KPRConfAddOnGCP';
 
             }
+            //TODO Poder añadir manualmente una marca o añadir un modelo que no esta a una marca existente.
         }
     }
 }
