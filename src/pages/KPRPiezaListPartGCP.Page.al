@@ -31,6 +31,7 @@ page 50108 KPRPiezaListPartGCP
                 field(FechaCambio; Rec.FechaCambio)
                 {
                     ToolTip = 'Specifies the value of the FechaCambio field.', Comment = '%';
+                    NotBlank = true;
                 }
                 field(ProveedorPieza; Rec.ProveedorPieza)
                 {
@@ -70,7 +71,7 @@ page 50108 KPRPiezaListPartGCP
         MatriculaFiltro := pMatricula;
     end;
 
-    procedure getMatrículaFiltro(): Text[10]
+    local procedure getMatrículaFiltro(): Text[10]
     begin
         exit(MatriculaFiltro);
     end;

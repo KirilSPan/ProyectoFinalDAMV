@@ -126,7 +126,7 @@ page 50100 "KPRFichaCocheGCP"
                 {
                     ApplicationArea = All;
                     SubPageLink = "Matricula" = field("Matrícula"); // Vincula la subpágina al coche actual
-                    // UpdatePropagation = Both;
+                    UpdatePropagation = Both;
                 }
             }
         }

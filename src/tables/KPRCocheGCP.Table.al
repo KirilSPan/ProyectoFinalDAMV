@@ -2,7 +2,6 @@ namespace KPR.GCP;
 
 using Microsoft.Sales.Customer;
 using GCP.GCP;
-using System.Utilities;
 table 50100 KPRCocheGCP
 {
     Caption = 'KPRCocheGCP';
@@ -17,8 +16,10 @@ table 50100 KPRCocheGCP
             NotBlank = true;
 
             trigger OnValidate()
+            var
+                culKPRFuncionesGCP: Codeunit KPRFuncionesGCP;
             begin
-                if IsValidSpanishPlate(Rec."Matrícula") then
+                if culKPRFuncionesGCP.IsValidSpanishPlate(Rec."Matrícula") then
                     Message('La matrícula es válida.')
                 else
                     Error('La matrícula no es válida. Debe seguir el formato español.');
@@ -87,24 +88,4 @@ table 50100 KPRCocheGCP
             Rec.Delete(false);
     end;
 
-    trigger OnModify()
-    begin
-
-        // Comprobar si la marca ha cambiado
-        // if Rec.Marca = xRec.Marca then begin
-        //     // Limpiar el modelo porque la marca ha cambiado
-        //     Validate(Modelo, '');
-        //     Rec.Modelo := '';
-        //     Rec.Modify();
-        // end;
-    end;
-
-    local procedure IsValidSpanishPlate(plate: Text[10]): Boolean
-    var
-        Regex: Codeunit Regex;
-    begin
-        // Valida la matrícula usando una expresión regular para el formato español
-        // Formato común: 1234BCD o BCD1234 (letras y números)
-        exit(Regex.IsMatch(plate, '^\d{4}?[A-Z]{3}$') or Regex.IsMatch(plate, '^[A-Z]{1,2}?\d{4}[ -]?[A-Z]{2}$'));
-    end;
 }

@@ -18,6 +18,8 @@ table 50103 KPRModeloCocheGCP
             Caption = 'Model Name';
 
             trigger OnValidate()
+            var
+                culKPRFuncionesGCP: Codeunit KPRFuncionesGCP;
             begin
                 // Verificar que el nombre del modelo no esté vacío
                 if "Model Name" = '' then
@@ -28,7 +30,7 @@ table 50103 KPRModeloCocheGCP
                     Error('Debe seleccionar una marca antes de definir el modelo.');
 
                 // Generar el código como combinación de marca y modelo
-                "Model Code" := GenerateCodeFromBrandAndModel("Brand Code", "Model Name");
+                "Model Code" := culKPRFuncionesGCP.GenerateCodeFromBrandAndModel("Brand Code", "Model Name");
             end;
         }
 
@@ -53,12 +55,4 @@ table 50103 KPRModeloCocheGCP
         }
     }
 
-    local procedure GenerateCodeFromBrandAndModel(BrandCode: Code[10]; ModelName: Text[50]): Code[10]
-    var
-        BrandAndModelCode: Text;
-    begin
-        // Eliminar espacios y combinar marca y modelo
-        BrandAndModelCode := UpperCase(DelChr(BrandCode, '=', ' ')) + '-' + UpperCase(DelChr(ModelName, '=', ' '));
-        exit(CopyStr(BrandAndModelCode, 1, 10)); // Limitar a 10 caracteres
-    end;
 }
