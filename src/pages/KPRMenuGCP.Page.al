@@ -68,21 +68,6 @@ page 50103 KPRMenuGCP
 
             group(administracion)
             {
-                action(ConfAddonGCP)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Configuración AddOn GCP';
-                    ToolTip = 'Para configurar el AddOn de GCP';
-                    Image = Administration;
-                    Promoted = true;
-                    PromotedCategory = Category7;
-                    PromotedIsBig = true;
-                    PromotedOnly = true;
-                    trigger OnAction()
-                    begin
-                        Page.run(page::KPRConfAddOnGCP);
-                    end;
-                }
                 action(CompanyInf)
                 {
                     ApplicationArea = All;

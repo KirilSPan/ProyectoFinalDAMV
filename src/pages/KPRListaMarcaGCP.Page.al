@@ -9,10 +9,6 @@ page 50105 KPRListaMarcaGCP
     PageType = List;
     SourceTable = KPRMarcaCocheGCP;
     UsageCategory = Lists;
-    InsertAllowed = false;
-    ModifyAllowed = false;
-    DeleteAllowed = false;
-
     layout
     {
         area(Content)

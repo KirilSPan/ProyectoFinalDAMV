@@ -52,19 +52,6 @@ page 50100 "KPRFichaCocheGCP"
 
                             end;
                     end;
-
-                    // trigger OnValidate()
-
-                    // begin
-                    //     if Rec.Marca <> xRec.Marca then
-                    //         // begin
-                    //         // Si la marca ha cambiado, limpiamos el campo del modelo
-                    //         Rec.Modelo := '';
-                    //     // Rec.Modify();
-                    //     // CurrPage.Update(false); // Refrescar la página para aplicar cambios
-                    //     // end;
-
-                    // end;
                 }
                 field(Modelo; Rec.Modelo)
                 {

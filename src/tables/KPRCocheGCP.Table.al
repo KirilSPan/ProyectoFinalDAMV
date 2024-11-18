@@ -41,6 +41,7 @@ table 50100 KPRCocheGCP
         field(5; "TipoTransmision"; Enum KPRTipoTransmisionGCP)
         {
             DataClassification = ToBeClassified;
+            Caption = 'Tipo de Transmisión';
         }
         field(6; "NumeroPuertas"; Option)
         {
@@ -49,7 +50,7 @@ table 50100 KPRCocheGCP
             OptionCaption = '2 Puertas,3 Puertas,4 Puertas,5 Puertas';
             Caption = 'Número de Puertas';
         }
-        field(7; "Foto"; Media) // Campo de tipo MediaSet para almacenar la imagen del coche
+        field(7; "Foto"; Media) // Campo de tipo Media para almacenar la imagen del coche
         {
             DataClassification = ToBeClassified;
             Caption = 'Foto del Coche';

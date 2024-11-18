@@ -7,10 +7,6 @@ page 50106 KPRListaModeloGCP
     PageType = List;
     SourceTable = KPRModeloCocheGCP;
     UsageCategory = Lists;
-    InsertAllowed = false;
-    ModifyAllowed = false;
-    DeleteAllowed = false;
-
     layout
     {
         area(Content)

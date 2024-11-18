@@ -2,6 +2,7 @@ namespace GCP.GCP;
 
 using KPR.GCP;
 using Microsoft.Sales.Customer;
+using Microsoft.Foundation.Company;
 
 report 50100 KPRInformePiezasGCP
 {
@@ -11,17 +12,25 @@ report 50100 KPRInformePiezasGCP
     DefaultLayout = RDLC;
     RDLCLayout = './layouts/InformePiezas.rdlc';
 
-
-
     dataset
     {
         dataitem(KPRPiezaGCP; KPRPiezaGCP)
         {
             DataItemTableView = sorting(Matricula); // Ordena por matrícula para el filtro
+
             dataitem(KPRCocheGCP; KPRCocheGCP)
             {
                 DataItemLinkReference = KPRPiezaGCP;
                 DataItemLink = "Matrícula" = field("Matricula");
+                column(Marca_KPRCocheGCP; Marca)
+                {
+                }
+                column(Modelo_KPRCocheGCP; Modelo)
+                {
+                }
+                column(FechadeMatriculacin_KPRCocheGCP; "Fecha de Matriculación")
+                {
+                }
 
                 dataitem(Customer; Customer)
                 {
@@ -69,13 +78,23 @@ report 50100 KPRInformePiezasGCP
             {
             }
 
+            column(Picture; gCompanyInformation.Picture)
+            {
+            }
+            column(CompanyName; gCompanyInformation.Name)
+            {
+            }
+            column(CompanyAddress; gCompanyInformation.Address)
+            {
+            }
+
             trigger OnPreDataItem()
+            var
+                culKPRFuncionesGCP: Codeunit KPRFuncionesGCP;
             begin
-                if FiltroMatricula <> '' then
-                    SetRange(Matricula, FiltroMatricula);
+                SetRange(Matricula, culKPRFuncionesGCP.GetMatricula());
             end;
         }
-
 
     }
     requestpage
@@ -84,17 +103,6 @@ report 50100 KPRInformePiezasGCP
         {
             area(Content)
             {
-                group(Options)
-                {
-                    Caption = 'Filtros del Informe';
-                    field("Filtro por Matrícula"; FiltroMatricula)
-                    {
-                        TableRelation = KPRCocheGCP."Matrícula";
-                        ApplicationArea = All;
-                        Caption = 'Filtros del Informe';
-                        ToolTip = 'Filtra por matrícula.';
-                    }
-                }
             }
         }
         actions
@@ -105,6 +113,13 @@ report 50100 KPRInformePiezasGCP
         }
     }
 
+    trigger OnInitReport()
+    begin
+        gCompanyInformation.Get();
+        gCompanyInformation.SetAutoCalcFields(Picture);
+    end;
+
     var
-        FiltroMatricula: Text[10]; // Variable para almacenar la matrícula seleccionada
+        gCompanyInformation: Record "Company Information";
+
 }

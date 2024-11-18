@@ -135,9 +135,13 @@ page 50107 KPRListaCocheGCP
                 ToolTip = 'Genera un informe de piezas asociadas a este coche.';
 
                 trigger OnAction()
+                var
+                    CocheSeleccionado: Record KPRCocheGCP;
+                    culKPRFuncionesGCP: Codeunit KPRFuncionesGCP;
                 begin
-                    // Ejecuta el informe mostrando primero la RequestPage para seleccionar filtros
-                    REPORT.RunModal(Report::KPRInformePiezasGCP);
+                    CurrPage.SetSelectionFilter(CocheSeleccionado);
+                    culKPRFuncionesGCP.SetMatricula(Rec."Matrícula");
+                    Report.Run(50100, true, false, CocheSeleccionado);
                 end;
             }
         }
